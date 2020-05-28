@@ -12,16 +12,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: PHP Security Checker
-      uses: StephaneBour/actions-php-security-checker@1.0
+      - name: Copy .env
+        run: cp .env.ci .env
 
-    - name: Setup project
-      run: make setup
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql db: postgres
+          postgresql user: postgres
+          postgresql password: postgres
 
-    - name: Check lint
-      run: make lint
+      - name: PHP Security Checker
+        uses: StephaneBour/actions-php-security-checker@1.0
 
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: make test
+      - name: Setup project
+        run: make setup
+
+      - name: Check lint
+        run: make lint
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: make test

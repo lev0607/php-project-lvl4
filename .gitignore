@@ -5,6 +5,8 @@ public/js
 public/css
 /storage/*.key
 /vendor
+/pgdata
+/.idea
 .env
 .phpunit.result.cache
 Homestead.json
@@ -12,3 +14,6 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 public/mix-manifest.json
+.phpstorm.meta.php
+_ide_helper.php
+/storage/debugbar/

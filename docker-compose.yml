@@ -9,8 +9,7 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
+      - ./pgdata:/var/lib/postgresql/data
   web:
     build:
       context: .
@@ -28,8 +27,8 @@ services:
     depends_on:
       - db
 
-volumes:
-  pgdata:
+#volumes:
+  #pgdata:
   # web_node_modules:
   # web_static:
   # app_build:

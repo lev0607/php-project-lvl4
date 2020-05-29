@@ -12,6 +12,7 @@
     <body>
         <div class="container mt-4">
             <p>This is home page!</p>
+            {{\Log::debug('Test debug message')}}
         </div>
     </body>
 </html>

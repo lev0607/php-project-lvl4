@@ -42,7 +42,7 @@ compose-test:
 compose-bash:
 	docker-compose run web bash
 
-compose-setup: compose-build
+compose-setup:
 	docker-compose run web make setup
 
 compose-build:

@@ -5,8 +5,9 @@
  */
 
 require('./bootstrap');
-require('jquery-ujs');
+const ujs = require('jquery-ujs');
 
+ujs.start();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

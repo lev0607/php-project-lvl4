@@ -37,11 +37,6 @@ class TaskStatusController extends Controller
             ->route('task_statuses.index');
     }
 
-    public function show(TaskStatus $taskStatus)
-    {
-        //
-    }
-
     public function edit(TaskStatus $taskStatus)
     {
         return view('taskStatus.edit', compact('taskStatus'));
@@ -50,8 +45,6 @@ class TaskStatusController extends Controller
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $data = $this->validate($request, [
-            // У обновления немного изменённая валидация. В проверку уникальности добавляется название поля и id текущего объекта
-            // Если этого не сделать, Laravel будет ругаться на то что имя уже существует
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 

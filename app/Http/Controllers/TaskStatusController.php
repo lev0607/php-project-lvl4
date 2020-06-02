@@ -22,7 +22,6 @@ class TaskStatusController extends Controller
 
     public function store(Request $request)
     {
-
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses',
         ]);

@@ -34,6 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link @yield('task')" href="{{route('tasks.index')}}">Tasks</a>
                         <a class="nav-item nav-link @yield('taskStatus')" href="{{route('task_statuses.index')}}">Task statuses</a>
                     </ul>
 

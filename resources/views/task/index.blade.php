@@ -25,16 +25,18 @@
                 <tr>
                     <td>{{$task->id}}</td>
                     <td>{{App\TaskStatus::find($task->status_id)->name}}</td>
-                    <td>{{$task->name}}</td>
+                    <td><a href="{{ route('tasks.show', $task) }}">{{$task->name}}</a></td>
                     <td>{{App\User::find($task->created_by_id)->name}}</td>
                     <td>{{$task->assigned_to_id ? App\User::find($task->assigned_to_id)->name : ""}}</td>
                     <td>{{$task->created_at}}</td>
                     @if (Auth::check())
                         <td><a href="{{route('tasks.edit', $task)}}">Edit</a>
+                            @if (auth()->user()->id === $task->created_by_id)
                             <a href="{{ route('tasks.destroy', $task) }}"
                                data-method="delete"
                                rel="nofollow"
                                data-confirm="Are you sure?">Remove</a>
+                            @endif
                         </td>
                     @endif
                 </tr>

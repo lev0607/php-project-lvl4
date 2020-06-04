@@ -31,7 +31,7 @@ class TaskStatusControllerTest extends TestCase
     public function testStore()
     {
         $factoryData = factory(TaskStatus::class)->make()->toArray();
-        $data = \Arr::only($factoryData, ['name', 'body']);
+        $data = \Arr::only($factoryData, ['name']);
         $response = $this->post(route('task_statuses.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();

@@ -14,6 +14,7 @@
                 <th>Creator</th>
                 <th>Assignee</th>
                 <th>Created At</th>
+                <th>Labels</th>
                 @if (Auth::check())
                     <th>Actions</th>
                 @endif
@@ -26,6 +27,11 @@
                     <td>{{App\User::find($task->created_by_id)->name}}</td>
                     <td>{{$task->assigned_to_id ? App\User::find($task->assigned_to_id)->name : ""}}</td>
                     <td>{{$task->created_at}}</td>
+                    <td>
+                    @foreach ($labels as $label)
+                        {{$label->name . " "}}
+                    @endforeach
+                    </td>
                     @if (Auth::check())
                         <td><a href="{{route('tasks.edit', $task)}}">Edit</a>
                             @if (auth()->user()->id === $task->created_by_id)

@@ -10,8 +10,8 @@ class Label extends Model
         'name',
     ];
 
-    public function task()
+    public function tasks()
     {
-        return $this->belongsTo('App\Task');
+        return $this->belongsToMany('App\Task', 'task_label');
     }
 }

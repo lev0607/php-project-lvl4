@@ -28,6 +28,13 @@
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
         </select>
+        {{ Form::label('label_id', 'Labels') }}
+        <select name="label_id">
+            <option value="">Labels</option>
+            @foreach ($labels as $label)
+                <option value="{{ $label->id }}">{{ $label->name }}</option>
+            @endforeach
+        </select>
         {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     </div>

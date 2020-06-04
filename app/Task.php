@@ -18,4 +18,9 @@ class Task extends Model
     {
         return $this->belongsTo('App\TaskStatus');
     }
+
+    public function labels()
+    {
+        return $this->hasMany('App\Label');
+    }
 }

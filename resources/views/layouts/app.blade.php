@@ -36,6 +36,7 @@
                     <ul class="navbar-nav mr-auto">
                         <a class="nav-item nav-link @yield('task')" href="{{route('tasks.index')}}">Tasks</a>
                         <a class="nav-item nav-link @yield('taskStatus')" href="{{route('task_statuses.index')}}">Task statuses</a>
+                        <a class="nav-item nav-link @yield('label')" href="{{route('labels.index')}}">Labels</a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

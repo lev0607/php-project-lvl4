@@ -7,79 +7,57 @@ use Illuminate\Http\Request;
 
 class LabelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $labels = Label::paginate();
+
+        return view('label.index', compact('labels'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $label = new Label();
+        return view('label.create', compact('label'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|unique:labels',
+        ]);
+
+        $label = new Label();
+        $label->fill($data);
+        $label->save();
+
+        flash('Task label was created!')->success();
+
+        return redirect()
+            ->route('labels.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Label  $label
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Label $label)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Label  $label
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Label $label)
     {
-        //
+        return view('label.edit', compact('label'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Label  $label
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Label $label)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|unique:labels,name,' . $label->id,
+        ]);
+
+        $label->fill($data);
+        $label->save();
+        return redirect()
+            ->route('labels.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Label  $label
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Label $label)
     {
-        //
+        if ($label) {
+            $label->delete();
+        }
+        return redirect()->route('labels.index');
     }
 }

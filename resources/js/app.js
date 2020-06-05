@@ -5,9 +5,11 @@
  */
 
 require('./bootstrap');
-const ujs = require('jquery-ujs');
-
-ujs.start();
+require('jquery-ujs');
+require('select2');
+$(document).ready(function() {
+    $('.multiselect-started').select2();
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

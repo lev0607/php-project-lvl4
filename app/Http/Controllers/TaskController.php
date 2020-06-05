@@ -37,7 +37,7 @@ class TaskController extends Controller
             'assigned_to_id' => '',
             'label_id' => '',
         ]);
-
+//        dd($data['label_id']);
         $task = new Task();
         $task->fill($data);
         $task->user()->associate($user);
@@ -64,14 +64,15 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
+        $labels = Label::all();
         $taskStatuses = TaskStatus::all();
         $users = User::all();
-        return view('task.edit', compact('task', 'taskStatuses', 'users'));
+
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     public function update(Request $request, Task $task)
     {
-        $user = auth()->user();
         $data = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
@@ -80,10 +81,16 @@ class TaskController extends Controller
             'label_id' => '',
         ]);
 
-        $task->fill($data);
-        $task->user()->associate($user);
+        if (isset($data['label_id'])) {
+            $task->labels()->sync($data['label_id']);
+        } else {
+            $task->labels()->detach();
+        }
 
+
+        $task->fill($data);
         $task->save();
+
         flash('Task was updated!')->success();
 
         return redirect()

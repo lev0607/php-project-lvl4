@@ -7,15 +7,28 @@ use App\TaskStatus;
 use App\User;
 use App\Label;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
 
     public function index()
     {
-        $tasks = Task::paginate();
+        $taskStatuses = TaskStatus::all();
+        $users = User::all();
+        $labels = Label::all();
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedIncludes(['labels'])
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+                'labels.name'
+            ])
+            ->get();
 
-        return view('task.index', compact('tasks'));
+        return view('task.index', compact('tasks', 'taskStatuses', 'users', 'labels'));
     }
 
     public function create()
@@ -37,7 +50,7 @@ class TaskController extends Controller
             'assigned_to_id' => '',
             'label_id' => '',
         ]);
-//        dd($data['label_id']);
+
         $task = new Task();
         $task->fill($data);
         $task->user()->associate($user);
@@ -57,7 +70,6 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $labels = $task->labels()->get();
-//        dd($labels);
 
         return view('task.show', compact('task', 'labels'));
     }
@@ -86,7 +98,6 @@ class TaskController extends Controller
         } else {
             $task->labels()->detach();
         }
-
 
         $task->fill($data);
         $task->save();

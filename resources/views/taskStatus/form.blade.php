@@ -6,5 +6,5 @@
     @endforeach
 @endif
 
-{{ Form::label('name', 'Name') }}
+{{ Form::label('name', __('tasks.name')) }}
 {{ Form::text('name') }}

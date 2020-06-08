@@ -34,9 +34,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link @yield('task')" href="{{route('tasks.index')}}">Tasks</a>
-                        <a class="nav-item nav-link @yield('taskStatus')" href="{{route('task_statuses.index')}}">Task statuses</a>
-                        <a class="nav-item nav-link @yield('label')" href="{{route('labels.index')}}">Labels</a>
+                        <a class="nav-item nav-link @yield('task')" href="{{route('tasks.index')}}">{{ __('menu.tasks') }}</a>
+                        <a class="nav-item nav-link @yield('taskStatus')" href="{{route('task_statuses.index')}}">{{ __('menu.status') }}</a>
+                        <a class="nav-item nav-link @yield('label')" href="{{route('labels.index')}}">{{ __('menu.labels') }}</a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -70,7 +70,14 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('locale', ['locale' => 'en']) }}">EN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('locale', ['locale' => 'ru']) }}">RU</a>
+                        </li>
                     </ul>
+
                 </div>
             </div>
         </nav>

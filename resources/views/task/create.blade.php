@@ -9,18 +9,18 @@
                 </div>
             @endforeach
         @endif
-        <h1 class="mb-5">Add new task status</h1>
+        <h1 class="mb-5">{{ __('tasks.create_tasks_title') }}</h1>
         {{ Form::model($task, ['url' => route('tasks.store')]) }}
         <div class="form-group">
-        {{ Form::label('name', 'Name') }}
+        {{ Form::label('name', __('tasks.name')) }}
         {{ Form::text('name', null, ['class' => 'form-control']) }}
         </div>
         <div class="form-group">
-        {{ Form::label('description', 'Description') }}
+        {{ Form::label('description', __('tasks.description')) }}
         {{ Form::text('description', null, ['class' => 'form-control']) }}
         </div>
         <div class="form-group">
-        {{ Form::label('status_id', 'Status') }}
+        {{ Form::label('status_id', __('tasks.status')) }}
         <select name="status_id" class="form-control">
             @foreach ($taskStatuses as $taskStatus)
                 <option value="{{ $taskStatus->id }}">{{ $taskStatus->name }}</option>
@@ -28,7 +28,7 @@
         </select>
         </div>
         <div class="form-group">
-        {{ Form::label('assigned_to_id', 'Assignee') }}
+        {{ Form::label('assigned_to_id', __('tasks.assignee')) }}
         <select name="assigned_to_id" class="form-control">
             <option value="">Assignee</option>
             @foreach ($users as $user)
@@ -44,7 +44,7 @@
             @endforeach
         </select>
         </div>
-        {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+        {{ Form::submit(__('tasks.create'), ['class' => 'btn btn-primary']) }}
         {{ Form::close() }}
     </div>
 @endsection

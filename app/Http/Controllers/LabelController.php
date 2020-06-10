@@ -49,6 +49,9 @@ class LabelController extends Controller
 
         $label->fill($data);
         $label->save();
+
+        flash('Task was updated!')->success();
+
         return redirect()
             ->route('labels.index');
     }
@@ -58,6 +61,9 @@ class LabelController extends Controller
         if ($label) {
             $label->delete();
         }
+
+        flash('Task was deleted!')->success();
+
         return redirect()->route('labels.index');
     }
 }

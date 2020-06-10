@@ -46,9 +46,9 @@ class TaskController extends Controller
         $data = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'status_id' => 'required',
-            'assigned_to_id' => '',
-            'label_id' => '',
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id',
+            'label_id' => 'nullable|exists:labels,id',
         ]);
 
         $task = new Task();
@@ -88,9 +88,9 @@ class TaskController extends Controller
         $data = $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
-            'status_id' => 'required',
-            'assigned_to_id' => '',
-            'label_id' => '',
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id',
+            'label_id' => 'nullable|exists:labels,id',
         ]);
 
         if (isset($data['label_id'])) {

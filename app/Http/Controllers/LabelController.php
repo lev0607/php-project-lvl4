@@ -17,6 +17,7 @@ class LabelController extends Controller
     public function create()
     {
         $label = new Label();
+
         return view('label.create', compact('label'));
     }
 

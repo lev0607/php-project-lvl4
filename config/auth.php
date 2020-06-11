@@ -100,4 +100,8 @@ return [
         ],
     ],
 
+    'verification' => [
+        'expire' => 525600, // One year in minutes
+    ],
+
 ];

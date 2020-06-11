@@ -19,9 +19,10 @@ Route::get('locale/{locale}', function ($locale) {
 
     return redirect()->back();
 })->name('locale');
-Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes(['verify' => true]);
 
 Route::resource('/task_statuses', 'TaskStatusController');
 

@@ -52,7 +52,7 @@
             @foreach ($tasks as $task)
                 <tr>
                     <td>{{$task->id}}</td>
-                    <td>{{App\TaskStatus::find($task->status_id)->name}}</td>
+                    <td>{{isset(App\TaskStatus::find($task->status_id)->name) ? App\TaskStatus::find($task->status_id)->name : ''}}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{$task->name}}</a></td>
                     <td>{{App\User::find($task->created_by_id)->name}}</td>
                     <td>{{$task->assigned_to_id ? App\User::find($task->assigned_to_id)->name : ""}}</td>

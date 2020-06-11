@@ -111,6 +111,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if ($task) {
+            $task->labels()->detach();
             $task->delete();
         }
         flash('Task was deleted!')->success();

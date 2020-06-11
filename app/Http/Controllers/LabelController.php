@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Label;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LabelController extends Controller
 {
@@ -60,7 +61,13 @@ class LabelController extends Controller
     public function destroy(Label $label)
     {
         if ($label) {
-            $label->delete();
+            try {
+                $label->delete();
+            } catch (\Illuminate\Database\QueryException  $e) {
+                Log::info($e->getMessage());
+                flash('This label can’t be deleted. It is used in other tasks!')->error();
+                return back();
+            }
         }
 
         flash('Task was deleted!')->success();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TaskStatusController extends Controller
 {
@@ -59,7 +60,13 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         if ($taskStatus) {
-            $taskStatus->delete();
+            try {
+                $taskStatus->delete();
+            } catch (\Illuminate\Database\QueryException  $e) {
+                Log::info($e->getMessage());
+                flash('This status can’t be deleted. It is used in other tasks!')->error();
+                return back();
+            }
         }
 
         flash('Task status was deleted!')->success();

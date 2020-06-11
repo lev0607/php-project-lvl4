@@ -5,9 +5,9 @@
     <div class="container">
         <h1 class="mb-5">{{ __('tasks.tasks_title') }}</h1>
         @if (Auth::check())
-            <a href="{{route('tasks.create')}}" class="btn btn-primary mb-1">{{ __('tasks.add') }}</a>
+            <a href="{{route('tasks.create')}}" class="btn btn-primary mb-2">{{ __('tasks.add') }}</a>
         @endif
-        <form method="GET" action="?" accept-charset="UTF-8" class="form-inline">
+        <form method="GET" action="?" accept-charset="UTF-8" class="form-inline mb-2">
             <select class="form-control mr-2" name="filter[status_id]">
                 <option value="">{{ __('tasks.status') }}</option>
                 @foreach ($taskStatuses as $taskStatus)

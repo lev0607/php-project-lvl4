@@ -23,9 +23,9 @@
                 <tr>
                     <td>{{$task->id}}</td>
                     <td>{{$taskStatusName}}</td>
-                    <td><a href="{{ route('tasks.show', $task) }}">{{$task->name}}</a></td>
+                    <td>{{$task->name}}</td>
                     <td>{{$taskCreator}}</td>
-                    <td>{{$task->assigned_to_id ? $taskAssigned : ""}}</td>
+                    <td>{{$taskAssigned}}</td>
                     <td>{{$task->created_at}}</td>
                     <td>
                     @foreach ($labels as $label)

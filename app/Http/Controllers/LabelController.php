@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LabelRequest;
 use App\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,11 +23,9 @@ class LabelController extends Controller
         return view('label.create', compact('label'));
     }
 
-    public function store(Request $request)
+    public function store(LabelRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels',
-        ]);
+        $data = $request->validated();
 
         $label = new Label();
         $label->fill($data);
@@ -43,11 +42,9 @@ class LabelController extends Controller
         return view('label.edit', compact('label'));
     }
 
-    public function update(Request $request, Label $label)
+    public function update(LabelRequest $request, Label $label)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels,name,' . $label->id,
-        ]);
+        $data = $request->validated();
 
         $label->fill($data);
         $label->save();

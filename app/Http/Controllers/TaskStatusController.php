@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStatusRequest;
 use App\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,11 +22,9 @@ class TaskStatusController extends Controller
         return view('taskStatus.create', compact('taskStatus'));
     }
 
-    public function store(Request $request)
+    public function store(TaskStatusRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses',
-        ]);
+        $data = $request->validated();
 
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
@@ -42,11 +41,9 @@ class TaskStatusController extends Controller
         return view('taskStatus.edit', compact('taskStatus'));
     }
 
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
-        ]);
+        $data = $request->validated();
 
         $taskStatus->fill($data);
         $taskStatus->save();
@@ -62,9 +59,10 @@ class TaskStatusController extends Controller
         if ($taskStatus) {
             try {
                 $taskStatus->delete();
-            } catch (\Illuminate\Database\QueryException  $e) {
+            } catch (\Illuminate\Database\QueryException $e) {
                 Log::info($e->getMessage());
                 flash('This status can’t be deleted. It is used in other tasks!')->error();
+
                 return back();
             }
         }

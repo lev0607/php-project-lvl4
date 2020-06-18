@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Task;
 use App\TaskStatus;
 use App\User;
@@ -40,16 +41,10 @@ class TaskController extends Controller
         return view('task.create', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
         $user = auth()->user();
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-            'label_id' => 'nullable|exists:labels,id',
-        ]);
+        $data = $request->validated();
 
         $task = new Task();
         $task->fill($data);
@@ -71,8 +66,8 @@ class TaskController extends Controller
     {
         $labels = $task->labels()->get();
         $taskStatusName = $task->status->name;
-        $taskAssigned = $task->user->name;
-        $taskCreator = $task->assigned->name;
+        $taskAssigned = $task->assigned->name ?? '';
+        $taskCreator = $task->user->name;
 
         return view('task.show', compact('task', 'taskStatusName', 'taskAssigned', 'taskCreator', 'labels'));
     }
@@ -86,15 +81,9 @@ class TaskController extends Controller
         return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-            'label_id' => 'nullable|exists:labels,id',
-        ]);
+        $data = $request->validated();
 
         if (isset($data['label_id'])) {
             $task->labels()->sync($data['label_id']);

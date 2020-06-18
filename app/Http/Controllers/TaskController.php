@@ -70,8 +70,11 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $labels = $task->labels()->get();
+        $taskStatusName = $task->status->name;
+        $taskAssigned = $task->user->name;
+        $taskCreator = $task->assigned->name;
 
-        return view('task.show', compact('task', 'labels'));
+        return view('task.show', compact('task', 'taskStatusName', 'taskAssigned', 'taskCreator', 'labels'));
     }
 
     public function edit(Task $task)

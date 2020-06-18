@@ -4,9 +4,9 @@
 @section('content')
     <div class="container">
         <h1 class="mb-5">{{ __('tasks.tasks_title') }}</h1>
-        @if (Auth::check())
+        @auth
             <a href="{{route('tasks.create')}}" class="btn btn-primary mb-2">{{ __('tasks.add') }}</a>
-        @endif
+        @endauth
         <form method="GET" action="?" accept-charset="UTF-8" class="form-inline mb-2">
             <select class="form-control mr-2" name="filter[status_id]">
                 <option value="">{{ __('tasks.status') }}</option>
@@ -44,25 +44,25 @@
                 <th>{{ __('tasks.assignee') }}</th>
                 <th>{{ __('tasks.labels') }}</th>
                 <th>{{ __('tasks.created_at') }}</th>
-                @if (Auth::check())
+                @auth
                     <th>{{ __('tasks.actions') }}</th>
-                @endif
+                @endauth
             </tr>
             </thead>
             @foreach ($tasks as $task)
                 <tr>
                     <td>{{$task->id}}</td>
-                    <td>{{isset(App\TaskStatus::find($task->status_id)->name) ? App\TaskStatus::find($task->status_id)->name : ''}}</td>
+                    <td>{{isset($task->status->name) ? $task->status->name : ''}}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{$task->name}}</a></td>
-                    <td>{{App\User::find($task->created_by_id)->name}}</td>
-                    <td>{{$task->assigned_to_id ? App\User::find($task->assigned_to_id)->name : ""}}</td>
+                    <td>{{$task->user->name}}</td>
+                    <td>{{$task->assigned_to_id ? $task->assigned->name : ""}}</td>
                     <td>
                         @foreach ($task->labels()->get() as $label)
                             {{$label->name . " "}}
                         @endforeach
                     </td>
                     <td>{{$task->created_at}}</td>
-                    @if (Auth::check())
+                    @auth
                         <td><a href="{{route('tasks.edit', $task)}}">{{ __('tasks.edit') }}</a>
                             @if (auth()->user()->id === $task->created_by_id)
                             <a href="{{ route('tasks.destroy', $task) }}"
@@ -71,7 +71,7 @@
                                data-confirm="{{ __('tasks.are_you_sure') }}">{{ __('tasks.remove') }}</a>
                             @endif
                         </td>
-                    @endif
+                    @endauth
                 </tr>
             @endforeach
         </table>

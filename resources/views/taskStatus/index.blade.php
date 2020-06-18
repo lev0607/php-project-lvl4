@@ -4,18 +4,18 @@
 @section('content')
     <div class="container">
             <h1 class="mb-5">{{ __('tasks.status_title') }}</h1>
-            @if (Auth::check())
+            @auth
                 <a href="{{route('task_statuses.create')}}" class="btn btn-primary mb-1">{{ __('tasks.add') }}</a>
-            @endif
+            @endauth
             <table class="table table-bordered table-hover text-nowrap">
                 <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>{{ __('tasks.name') }}</th>
                     <th>{{ __('tasks.created_at') }}</th>
-                    @if (Auth::check())
+                    @auth
                         <th>{{ __('tasks.actions') }}</th>
-                    @endif
+                    @endauth
                 </tr>
                 </thead>
                 @foreach ($taskStatuses as $taskStatus)
@@ -23,14 +23,14 @@
                         <td>{{$taskStatus->id}}</td>
                         <td>{{$taskStatus->name}}</td>
                         <td>{{$taskStatus->created_at}}</td>
-                        @if (Auth::check())
+                        @auth
                             <td><a href="{{route('task_statuses.edit', $taskStatus)}}">{{ __('tasks.edit') }}</a>
                                 <a href="{{ route('task_statuses.destroy', $taskStatus) }}"
                                    data-method="delete"
                                    rel="nofollow"
                                    data-confirm="{{ __('tasks.are_you_sure') }}">{{ __('tasks.remove') }}</a>
                             </td>
-                        @endif
+                        @endauth
                     </tr>
                 @endforeach
             </table>

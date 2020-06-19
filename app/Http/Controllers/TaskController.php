@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskRequest;
+use App\Services\TaskService;
 use App\Task;
 use App\TaskStatus;
 use App\User;
@@ -12,6 +13,12 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
+    private TaskService $service;
+
+    public function __construct(TaskService $service)
+    {
+        $this->service = $service;
+    }
 
     public function index()
     {
@@ -45,15 +52,7 @@ class TaskController extends Controller
         $user = auth()->user();
         $data = $request->validated();
 
-        $task = new Task();
-        $task->fill($data);
-        $task->user()->associate($user);
-        $task->save();
-
-        if (!empty($data['label_id'])) {
-            $label = Label::find($data['label_id']);
-            $task->labels()->attach($label);
-        }
+        $this->service->create($data, $user);
 
         flash(__('flash.task_create'))->success();
 
@@ -84,14 +83,7 @@ class TaskController extends Controller
     {
         $data = $request->validated();
 
-        if (isset($data['label_id'])) {
-            $task->labels()->sync($data['label_id']);
-        } else {
-            $task->labels()->detach();
-        }
-
-        $task->fill($data);
-        $task->save();
+        $this->service->update($data, $task);
 
         flash(__('flash.task_update'))->success();
 
@@ -101,10 +93,8 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        if ($task) {
-            $task->labels()->detach();
-            $task->delete();
-        }
+        $this->service->delete($task);
+
         flash(__('flash.task_delete'))->success();
 
         return back();

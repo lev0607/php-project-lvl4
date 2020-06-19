@@ -55,7 +55,7 @@
                     <td>{{isset($task->status->name) ? $task->status->name : ''}}</td>
                     <td><a href="{{ route('tasks.show', $task) }}">{{$task->name}}</a></td>
                     <td>{{$task->user->name}}</td>
-                    <td>{{$task->assigned_to_id ? $task->assigned->name : ""}}</td>
+                    <td>{{$task->assigned_to_id ? $task->assigned->name : ''}}</td>
                     <td>
                         @foreach ($task->labels()->get() as $label)
                             {{$label->name . " "}}

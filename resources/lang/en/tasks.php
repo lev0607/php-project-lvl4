@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'id' => 'Id',
     'tasks_title' => 'Tasks',
     'labels_title' => 'Labels',
     'status_title' => 'Task statuses',

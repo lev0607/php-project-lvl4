@@ -7,7 +7,6 @@ use App\Task;
 use App\TaskStatus;
 use App\User;
 use App\Label;
-use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -56,7 +55,7 @@ class TaskController extends Controller
             $task->labels()->attach($label);
         }
 
-        flash('Task was created!')->success();
+        flash(__('flash.task_create'))->success();
 
         return redirect()
             ->route('tasks.index');
@@ -94,7 +93,7 @@ class TaskController extends Controller
         $task->fill($data);
         $task->save();
 
-        flash('Task was updated!')->success();
+        flash(__('flash.task_update'))->success();
 
         return redirect()
             ->route('tasks.index');
@@ -106,7 +105,7 @@ class TaskController extends Controller
             $task->labels()->detach();
             $task->delete();
         }
-        flash('Task was deleted!')->success();
+        flash(__('flash.task_delete'))->success();
 
         return back();
     }

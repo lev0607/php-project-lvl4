@@ -8,7 +8,7 @@
         <table class="table table-bordered table-hover text-nowrap">
             <thead class="thead-dark">
             <tr>
-                <th>Id</th>
+                <th>{{ __('tasks.id') }}</th>
                 <th>{{ __('tasks.status') }}</th>
                 <th>{{ __('tasks.name') }}</th>
                 <th>{{ __('tasks.creator') }}</th>

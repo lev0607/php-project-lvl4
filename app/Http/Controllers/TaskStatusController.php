@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskStatusRequest;
 use App\TaskStatus;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TaskStatusController extends Controller
@@ -30,7 +29,7 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
-        flash('Task status was created!')->success();
+        flash(__('flash.task_status_create'))->success();
 
         return redirect()
             ->route('task_statuses.index');
@@ -48,7 +47,7 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
-        flash('Task was updated!')->success();
+        flash(__('flash.task_status_update'))->success();
 
         return redirect()
             ->route('task_statuses.index');
@@ -61,13 +60,13 @@ class TaskStatusController extends Controller
                 $taskStatus->delete();
             } catch (\Illuminate\Database\QueryException $e) {
                 Log::info($e->getMessage());
-                flash('This status can’t be deleted. It is used in other tasks!')->error();
+                flash(__('flash.used_task_status'))->error();
 
                 return back();
             }
         }
 
-        flash('Task status was deleted!')->success();
+        flash(__('flash.task_status_delete'))->success();
 
         return redirect()->route('task_statuses.index');
     }

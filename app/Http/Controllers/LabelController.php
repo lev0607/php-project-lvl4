@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LabelRequest;
 use App\Label;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class LabelController extends Controller
@@ -31,7 +30,7 @@ class LabelController extends Controller
         $label->fill($data);
         $label->save();
 
-        flash('Task label was created!')->success();
+        flash(__('flash.label_create'))->success();
 
         return redirect()
             ->route('labels.index');
@@ -49,7 +48,7 @@ class LabelController extends Controller
         $label->fill($data);
         $label->save();
 
-        flash('Task was updated!')->success();
+        flash(__('flash.label_update'))->success();
 
         return redirect()
             ->route('labels.index');
@@ -62,12 +61,12 @@ class LabelController extends Controller
                 $label->delete();
             } catch (\Illuminate\Database\QueryException  $e) {
                 Log::info($e->getMessage());
-                flash('This label can’t be deleted. It is used in other tasks!')->error();
+                flash(__('flash.used_label'))->error();
                 return back();
             }
         }
 
-        flash('Task was deleted!')->success();
+        flash(__('flash.label_delete'))->success();
 
         return redirect()->route('labels.index');
     }

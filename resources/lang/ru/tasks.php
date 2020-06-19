@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'id' => '№',
     'tasks_title' => 'Задачи',
     'labels_title' => 'Метки',
     'status_title' => 'Статусы',

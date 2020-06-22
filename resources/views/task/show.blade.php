@@ -22,10 +22,10 @@
             </thead>
                 <tr>
                     <td>{{$task->id}}</td>
-                    <td>{{$taskStatusName}}</td>
+                    <td>{{$task->status->name}}</td>
                     <td>{{$task->name}}</td>
-                    <td>{{$taskCreator}}</td>
-                    <td>{{$taskAssigned}}</td>
+                    <td>{{$task->user->name}}</td>
+                    <td>{{$task->assigned->name ?? ''}}</td>
                     <td>{{$task->created_at}}</td>
                     <td>
                     @foreach ($labels as $label)
@@ -34,12 +34,12 @@
                     </td>
                     @auth
                         <td><a href="{{route('tasks.edit', $task)}}">{{ __('tasks.edit') }}</a>
-                            @if (auth()->user()->id === $task->created_by_id)
+                            @can('delete', $task)
                                 <a href="{{ route('tasks.destroy', $task) }}"
                                    data-method="delete"
                                    rel="nofollow"
                                    data-confirm="{{ __('tasks.are_you_sure') }}">{{ __('tasks.remove') }}</a>
-                            @endif
+                            @endcan
                         </td>
                     @endauth
                 </tr>

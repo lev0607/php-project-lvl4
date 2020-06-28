@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\TaskStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -57,8 +58,12 @@ class TaskControllerTest extends TestCase
 
     public function testDestroy()
     {
-        $task = factory(Task::class)->create();
-        $response = $this->delete(route('tasks.destroy', [$task]));
+        $user = factory(User::class)->create();
+        $task = factory(Task::class)->make();
+        $task->user()->associate($user);
+        $task->save();
+
+        $response = $this->actingAs($user)->delete(route('tasks.destroy', [$task]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 

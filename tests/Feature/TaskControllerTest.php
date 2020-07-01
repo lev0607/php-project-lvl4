@@ -63,7 +63,7 @@ class TaskControllerTest extends TestCase
         $task->user()->associate($user);
         $task->save();
 
-        $response = $this->actingAs($user)->delete(route('tasks.destroy', [$task]));
+        $response = $this->actingAs($user)->delete(route('tasks.destroy', $task));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
 
